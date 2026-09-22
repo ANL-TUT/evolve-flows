@@ -104,7 +104,10 @@ def evaluate(program_path):
         return {{"combined_score": 0.0, "error": str(exc_box[0])}}
     if result_box[0] is None:
         return {{"combined_score": 0.0}}
-    return result_box[0].metrics
+    # to_dict() keeps the artifacts (e.g. build errors) next to the metrics so
+    # a backend can feed them back to the search, as skydiscover's own
+    # evaluate(path) -> dict contract does.
+    return result_box[0].to_dict()
 '''
 
 
